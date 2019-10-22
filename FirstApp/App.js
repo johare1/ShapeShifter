@@ -90,32 +90,34 @@ const styles = StyleSheet.create({
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: 'red',
+    margin: 3
   },
   circle: {
     width: 100,
     height: 100,
     borderRadius: 100/2,
     backgroundColor: 'blue',
-    padding: 40
+    margin: 3
   },
   square: {
     width: 100,
     height: 100,
     backgroundColor: 'green',
-    padding: 12
+    padding: 12,
+    margin: 3
   },
   container: {
     height: 1000,
   },
   scrollView: {
-    flex: 1,
+    flex: 4,
     backgroundColor: 'lightgray',
   },
   clock: {
     backgroundColor: 'skyblue'
   },
   View: {
-    flex: 9
+    flex: 8
   }
 })
 
