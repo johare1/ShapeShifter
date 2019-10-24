@@ -12,6 +12,7 @@ import {
   StyleSheet,
   ScrollView,
   Button,
+  TouchableOpacity,
   View,
   Text,
   StatusBar,
@@ -62,11 +63,15 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
-        <Text style={styles.square}/>
-        <Text style={styles.triangle}/>
-        <Text style={styles.circle}/>
-        <Text style={styles.circle}/>
-        <Text style={styles.circle}/>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.square}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.triangle}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.circle}/>
+        </TouchableOpacity>
       </ScrollView>
       <View style={styles.View}>
         <Clock/>
@@ -76,6 +81,11 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10
+  },
   Scrollelements: {
     paddingHorizontal: 10
   },
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue'
   },
   View: {
-    flex: 8
+    flex: 7
   }
 })
 
