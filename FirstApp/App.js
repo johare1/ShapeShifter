@@ -21,7 +21,7 @@ import {
 class MasterView extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {shapes: "None"}
+    this.state = {shapes: null}
   }
 
   AppCallback = (Shape) => {
@@ -33,9 +33,7 @@ class MasterView extends React.Component{
       <SafeAreaView style={styles.container}>
         <ScrollViewButtons onChange={this.AppCallback}></ScrollViewButtons>
         <View style={styles.View}>
-          <Text>
-            {this.state.shapes}
-          </Text>
+          {this.state.shapes}
         </View>
       </SafeAreaView>
     );
@@ -54,9 +52,9 @@ class ScrollViewButtons extends React.Component{
   }
 
   render(){
-    const square = "Square";
-    const circle = "Circle";
-    const triangle = "Triangle";
+    const square = (<Text style={styles.square}/>);
+    const circle = (<Text style={styles.circle}/>)
+    const triangle = (<Text style={styles.triangle}/>);
     return(
       <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
         <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
