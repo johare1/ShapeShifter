@@ -50,9 +50,7 @@ class ScrollViewButtons extends React.Component{
   }
 
   ScrollButtonCallback = (Shape) => {
-    this.setState({shapes: Shape})
-    alert('hello')
-    this.props.onChange(this.state.shapes)
+    this.props.onChange(Shape)
   }
 
   render(){
@@ -66,39 +64,6 @@ class ScrollViewButtons extends React.Component{
         <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={circle}></CircleScrollButton>
         <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
       </ScrollView>
-    );
-  }
-
-}
-
-class Clock extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {date: new Date()};
-  }
-
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  tick() {
-    this.setState({
-      date: new Date()
-    });
-  }
-
-  render(){
-    return(
-      <Text>
-        {this.state.date.toLocaleTimeString()}
-      </Text> 
     );
   }
 
