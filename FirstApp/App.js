@@ -18,13 +18,58 @@ import {
   StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+class MasterView extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {shapes: "None"}
+  }
+
+  AppCallback = (Shape) => {
+    this.setState({shapes: Shape})
+  }
+
+  render(){
+    return(
+      <SafeAreaView style={styles.container}>
+        <ScrollViewButtons onChange={this.AppCallback}></ScrollViewButtons>
+        <View style={styles.View}>
+          <Text>
+            {this.state.shapes}
+          </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+}
+
+class ScrollViewButtons extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {shapes: "None"}
+  }
+
+  ScrollButtonCallback = (Shape) => {
+    this.setState({shapes: Shape})
+    alert('hello')
+    this.props.onChange(this.state.shapes)
+  }
+
+  render(){
+    const square = "Square";
+    const circle = "Circle";
+    const triangle = "Triangle";
+    return(
+      <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
+        <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={triangle}></TriangleScrollButton>
+        <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={circle}></CircleScrollButton>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
+      </ScrollView>
+    );
+  }
+
+}
 
 class Clock extends React.Component{
   constructor(props) {
@@ -59,24 +104,65 @@ class Clock extends React.Component{
 
 }
 
+class SquareScrollButton extends React.Component{
+  constructor(props) {
+    super(props);
+  }
+
+  ButtonPress = () => {
+    this.props.onPress(this.props.renderOnPress)
+  }
+
+  render(){
+    return(
+      <TouchableOpacity style={styles.button} onPress={this.ButtonPress}>
+          <Text style={styles.square}/>
+      </TouchableOpacity>
+    );
+  }
+
+}
+
+class CircleScrollButton extends React.Component{
+  constructor(props) {
+    super(props);
+  }
+
+  ButtonPress = () => {
+    this.props.onPress(this.props.renderOnPress)
+  }
+
+  render(){
+    return(
+      <TouchableOpacity style={styles.button} onPress={this.ButtonPress}>
+          <Text style={styles.circle}/>
+      </TouchableOpacity>
+    );
+  }
+}
+
+class TriangleScrollButton extends React.Component{
+    constructor(props) {
+      super(props);
+    }
+  
+    ButtonPress = () => {
+      this.props.onPress(this.props.renderOnPress)
+    }
+  
+    render(){
+      return(
+        <TouchableOpacity style={styles.button} onPress={this.ButtonPress}>
+            <Text style={styles.triangle}/>
+        </TouchableOpacity>
+      );
+    }
+
+}
+
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.square}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.triangle}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.circle}/>
-        </TouchableOpacity>
-      </ScrollView>
-      <View style={styles.View}>
-        <Clock/>
-      </View>
-    </SafeAreaView>
+    <MasterView/>
   );
 };
 
