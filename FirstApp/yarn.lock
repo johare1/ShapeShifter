@@ -5095,7 +5095,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5169,6 +5169,13 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
+
+react-native-draggable@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/react-native-draggable/-/react-native-draggable-1.0.21.tgz#83478e7d6058733ad0208e45b7c539ebc573c048"
+  integrity sha512-ISF4/GjlUfXthuC7Xi5q2mrHfX8RlFq5LjGbBnjhhkmqzsTDhcHDNgEMkEJafOOwgGROt2gLzVtEgH0b2feCJA==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native@0.60.5:
   version "0.60.5"

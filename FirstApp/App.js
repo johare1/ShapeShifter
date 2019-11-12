@@ -16,7 +16,10 @@ import {
   View,
   Text,
   StatusBar,
+  PanResponder,
+  Animated
 } from 'react-native';
+import Draggable from 'react-native-draggable';
 
 class MasterView extends React.Component{
   constructor(props) {
@@ -54,11 +57,10 @@ class ScrollViewButtons extends React.Component{
   render(){
     const square = (<Text style={styles.square}/>);
     const circle = (<Text style={styles.circle}/>)
-    const triangle = (<Text style={styles.triangle}/>);
     return(
       <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
         <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
-        <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={triangle}></TriangleScrollButton>
+        <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<TriangleCanvasShape/>}></TriangleScrollButton>
         <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={circle}></CircleScrollButton>
         <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
       </ScrollView>
@@ -120,6 +122,25 @@ class TriangleScrollButton extends React.Component{
         </TouchableOpacity>
       );
     }
+
+}
+
+class TriangleCanvasShape extends React.Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pan: new Animated.ValueXY()
+    };
+  }
+
+  render(){
+    return(
+      <Draggable reverse={false}>
+        <Text style={styles.triangle}/>
+      </Draggable>  
+    );
+  }
 
 }
 
