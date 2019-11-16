@@ -17,9 +17,11 @@ import {
   Text,
   StatusBar,
   PanResponder,
+  TextInput,
   Animated
 } from 'react-native';
-import Draggable from 'react-native-draggable';
+import Draggable from './CustomModules/react-native-draggable/Draggable';
+import MenuDrawer from 'react-native-side-drawer'
 
 class MasterView extends React.Component{
   constructor(props) {
@@ -34,10 +36,11 @@ class MasterView extends React.Component{
   render(){
     return(
       <SafeAreaView style={styles.container}>
-        <ScrollViewButtons onChange={this.AppCallback}></ScrollViewButtons>
+        <ScrollViewButtons onChange={this.AppCallback} onCanvasPress={this.props.onCanvasPress}></ScrollViewButtons>
         <View style={styles.View}>
           {this.state.shapes}
         </View>
+        
       </SafeAreaView>
     );
   }
@@ -55,20 +58,18 @@ class ScrollViewButtons extends React.Component{
   }
 
   render(){
-    const square = (<Text style={styles.square}/>);
-    const circle = (<Text style={styles.circle}/>)
     return(
       <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
-        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<SquareCanvasShape/>}></SquareScrollButton>
         <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<TriangleCanvasShape/>}></TriangleScrollButton>
-        <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={circle}></CircleScrollButton>
-        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
+        <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CircleCanvasShape onPress={this.props.onCanvasPress}/>}></CircleScrollButton>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<SquareCanvasShape/>}></SquareScrollButton>
       </ScrollView>
     );
   }
 
 }
-
+//SCROLL BUTTONS
 class SquareScrollButton extends React.Component{
   constructor(props) {
     super(props);
@@ -125,6 +126,47 @@ class TriangleScrollButton extends React.Component{
 
 }
 
+class SettingsSideBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
+
+  toggleOpen = () => {
+    this.setState({ open: !this.state.open });
+    alert("pressed");
+  };
+
+  drawerContent = () => {
+    return (
+      <TouchableOpacity onPress={this.toggleOpen} style={styles.animatedBox}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <MenuDrawer style={{position: "absolute",
+    zIndex: 1}} 
+          open={this.state.open} 
+          drawerContent={this.drawerContent()}
+          drawerPercentage={45}
+          animationTime={250}
+          overlay={true}
+          opacity={0.4}
+        >
+        
+        <MasterView style={{position: "absolute", zIndex: 0}} onCanvasPress={this.toggleOpen}/>
+        </MenuDrawer>
+      </View>
+    );
+  }
+}
+// CANVAS SHAPES
 class TriangleCanvasShape extends React.Component{
   constructor(props) {
     super(props);
@@ -141,12 +183,47 @@ class TriangleCanvasShape extends React.Component{
       </Draggable>  
     );
   }
-
 }
+
+  class SquareCanvasShape extends React.Component{
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        pan: new Animated.ValueXY()
+      };
+    }
+  
+    render(){
+      return(
+        <Draggable reverse={false}>
+          <Text style={styles.square}/>
+        </Draggable>  
+      );
+    }
+  }
+
+    class CircleCanvasShape extends React.Component{
+      constructor(props) {
+        super(props);
+    
+        this.state = {
+          pan: new Animated.ValueXY()
+        };
+      }
+    
+      render(){
+        return(
+          <Draggable reverse={false} pressDrag={this.props.onPress}>
+            <Text style={styles.circle}/>
+          </Draggable>  
+        );
+      }
+    }
 
 const App = () => {
   return (
-    <MasterView/>
+    <SettingsSideBar/>
   );
 };
 
@@ -197,8 +274,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue'
   },
   View: {
-    flex: 7
-  }
+    flex: 7,
+  },
+  animatedBox: {
+    flex: 1,
+    backgroundColor: "#38C8EC",
+    position: "absolute",
+    zIndex: 0
+  },
 })
 
 export default App;
