@@ -28,9 +28,11 @@ let canvasShapes = [];
 class MasterView extends React.Component{
   constructor(props) {
     super(props);
+    this.state = {shapes: null}
   }
 
   AppCallback = (Shape) => {
+    this.setState({shapes: Shape})
     canvasShapes.push(Shape);
   }
 
