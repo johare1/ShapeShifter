@@ -23,14 +23,15 @@ import {
 import Draggable from './CustomModules/react-native-draggable/Draggable';
 import MenuDrawer from 'react-native-side-drawer'
 
+let canvasShapes = [];
+
 class MasterView extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {shapes: null}
   }
 
   AppCallback = (Shape) => {
-    this.setState({shapes: Shape})
+    canvasShapes.push(Shape);
   }
 
   render(){
@@ -38,7 +39,7 @@ class MasterView extends React.Component{
       <SafeAreaView style={styles.container}>
         <ScrollViewButtons onChange={this.AppCallback} onCanvasPress={this.props.onCanvasPress}></ScrollViewButtons>
         <View style={styles.View}>
-          {this.state.shapes}
+          {canvasShapes}
         </View>
         
       </SafeAreaView>
