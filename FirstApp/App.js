@@ -60,10 +60,10 @@ class ScrollViewButtons extends React.Component{
   render(){
     return(
       <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
-        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<SquareCanvasShape/>}></SquareScrollButton>
-        <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<TriangleCanvasShape/>}></TriangleScrollButton>
-        <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CircleCanvasShape onPress={this.props.onCanvasPress}/>}></CircleScrollButton>
-        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<SquareCanvasShape/>}></SquareScrollButton>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"square"} onPress={this.props.onCanvasPress}/>}></SquareScrollButton>
+        <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"triangle"} onPress={this.props.onCanvasPress}/>}></TriangleScrollButton>
+        <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"circle"} onPress={this.props.onCanvasPress}/>}></CircleScrollButton>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"square"} onPress={this.props.onCanvasPress}/>}></SquareScrollButton>
       </ScrollView>
     );
   }
@@ -166,8 +166,8 @@ class SettingsSideBar extends React.Component {
     );
   }
 }
-// CANVAS SHAPES
-class TriangleCanvasShape extends React.Component{
+// CANVAS SHAPE
+class CanvasShape extends React.Component{
   constructor(props) {
     super(props);
 
@@ -176,50 +176,49 @@ class TriangleCanvasShape extends React.Component{
     };
   }
 
+  getShape = () => {
+  if(this.props.renderShape == 'circle') {
+    return{
+      width: 100,
+      height: 100,
+      borderRadius: 100/2,
+      backgroundColor: 'blue',
+      margin: 3
+    };
+  }else if(this.props.renderShape == 'square') {
+    return{
+      width: 100,
+      height: 100,
+      backgroundColor: 'green',
+      padding: 12,
+      margin: 3 
+    };
+  }else if(this.props.renderShape == 'triangle') {
+    return{
+      width: 0,
+      height: 0,
+      backgroundColor: 'transparent',
+      borderStyle: 'solid',
+      borderLeftWidth: 50,
+      borderRightWidth: 50,
+      borderBottomWidth: 100,
+      borderLeftColor: 'transparent',
+      borderRightColor: 'transparent',
+      borderBottomColor: 'red',
+      margin: 3
+    };
+  }
+}
+
   render(){
     return(
-      <Draggable reverse={false}>
-        <Text style={styles.triangle}/>
+      <Draggable pressDrag={this.props.onPress} reverse={false}>
+        <Text style={this.getShape()}/>
       </Draggable>  
     );
   }
 }
 
-  class SquareCanvasShape extends React.Component{
-    constructor(props) {
-      super(props);
-  
-      this.state = {
-        pan: new Animated.ValueXY()
-      };
-    }
-  
-    render(){
-      return(
-        <Draggable reverse={false}>
-          <Text style={styles.square}/>
-        </Draggable>  
-      );
-    }
-  }
-
-    class CircleCanvasShape extends React.Component{
-      constructor(props) {
-        super(props);
-    
-        this.state = {
-          pan: new Animated.ValueXY()
-        };
-      }
-    
-      render(){
-        return(
-          <Draggable reverse={false} pressDrag={this.props.onPress}>
-            <Text style={styles.circle}/>
-          </Draggable>  
-        );
-      }
-    }
 
 const App = () => {
   return (
