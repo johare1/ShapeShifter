@@ -215,7 +215,7 @@ class CanvasShape extends React.Component{
 
   render(){
     return(
-      <Draggable pressDrag={this.props.onPress} reverse={false}>
+      <Draggable pressDrag={this.props.onPress} reverse={false} renderShape={'button'}>
         <Text style={this.getShape()}/>
       </Draggable>  
     );

@@ -129,12 +129,13 @@ export default class Draggable extends Component {
 				height: renderSize * 2,
 				borderRadius: renderSize 
 			};
-		}else if(renderShape == 'square') {
+		}else if(renderShape == 'button') {
 			return{
-				backgroundColor: renderColor,
+				alignItems: 'center',
 				width: renderSize * 2,
 				height: renderSize * 2,
-				borderRadius: 0 
+				borderRadius: renderSize,
+    			padding: 10
 			};
 		}else if(renderShape == 'image') {
 			return{
