@@ -21,7 +21,7 @@ import {
   Animated
 } from 'react-native';
 import Draggable from './CustomModules/react-native-draggable/Draggable';
-import MenuDrawer from 'react-native-side-drawer'
+import MenuDrawer from './CustomModules/react-native-side-drawer'
 
 let canvasShapes = [];
 
@@ -152,9 +152,8 @@ class SettingsSideBar extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <MenuDrawer style={{position: "absolute",
-    zIndex: 1}} 
+      <View style={styles.container2}>
+        <MenuDrawer 
           open={this.state.open} 
           drawerContent={this.drawerContent()}
           drawerPercentage={45}
@@ -162,8 +161,8 @@ class SettingsSideBar extends React.Component {
           overlay={true}
           opacity={0.4}
         >
-        
-        <MasterView style={{position: "absolute", zIndex: 0}} onCanvasPress={this.toggleOpen}/>
+         <MasterView onCanvasPress={this.toggleOpen}/>
+       
         </MenuDrawer>
       </View>
     );
@@ -236,7 +235,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   Scrollelements: {
-    paddingHorizontal: 10
+    paddingHorizontal: 1
   },
   triangle: {
     width: 0,
@@ -268,6 +267,10 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
   },
+  container2: {
+    zIndex: 0,
+    flex: 1
+  },
   scrollView: {
     flex: 4,
     backgroundColor: 'lightgray',
@@ -281,8 +284,6 @@ const styles = StyleSheet.create({
   animatedBox: {
     flex: 1,
     backgroundColor: "#38C8EC",
-    position: "absolute",
-    zIndex: 0
   },
 })
 

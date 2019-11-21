@@ -50,7 +50,7 @@ export default class Draggable extends Component {
 		renderShape : 'none',
 		renderColor : 'yellowgreen',
 		renderText : '＋',
-		renderSize : 36,
+		renderSize : 50,
 		offsetY : 100,
 		reverse : true
 	}
@@ -131,11 +131,9 @@ export default class Draggable extends Component {
 			};
 		}else if(renderShape == 'button') {
 			return{
-				alignItems: 'center',
 				width: renderSize * 2,
 				height: renderSize * 2,
 				borderRadius: renderSize,
-    			padding: 10
 			};
 		}else if(renderShape == 'image') {
 			return{
