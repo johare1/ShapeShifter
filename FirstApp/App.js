@@ -144,7 +144,6 @@ class SettingsSideBar extends React.Component {
 
   drawerContent = () => {
     return (
-      <View>
       <TouchableOpacity onPress={this.toggleOpen} style={styles.animatedBox}>
         <Text>Close</Text>
       </TouchableOpacity>
