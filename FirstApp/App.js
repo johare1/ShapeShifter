@@ -17,9 +17,13 @@ import {
   Text,
   StatusBar,
   PanResponder,
+  TextInput,
   Animated
 } from 'react-native';
-import Draggable from 'react-native-draggable';
+import Draggable from './CustomModules/react-native-draggable/Draggable';
+import MenuDrawer from './CustomModules/react-native-side-drawer'
+
+let canvasShapes = [];
 
 class MasterView extends React.Component{
   constructor(props) {
@@ -29,15 +33,17 @@ class MasterView extends React.Component{
 
   AppCallback = (Shape) => {
     this.setState({shapes: Shape})
+    canvasShapes.push(Shape);
   }
 
   render(){
     return(
       <SafeAreaView style={styles.container}>
-        <ScrollViewButtons onChange={this.AppCallback}></ScrollViewButtons>
+        <ScrollViewButtons onChange={this.AppCallback} onCanvasPress={this.props.onCanvasPress}></ScrollViewButtons>
         <View style={styles.View}>
-          {this.state.shapes}
+          {canvasShapes}
         </View>
+        
       </SafeAreaView>
     );
   }
@@ -55,20 +61,19 @@ class ScrollViewButtons extends React.Component{
   }
 
   render(){
-    const square = (<Text style={styles.square}/>);
-    const circle = (<Text style={styles.circle}/>)
     return(
       <ScrollView contentContainerStyle={styles.Scrollelements} style={styles.scrollView} horizontal={true} decelerationRate={0} snapToInterval={200} snapToAlignment={"center"}>
-        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
-        <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<TriangleCanvasShape/>}></TriangleScrollButton>
-        <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={circle}></CircleScrollButton>
-        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={square}></SquareScrollButton>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"square"} onPress={this.props.onCanvasPress}/>}></SquareScrollButton>
+        <TriangleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"triangle"} onPress={this.props.onCanvasPress}/>}></TriangleScrollButton>
+        <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"circle"} onPress={this.props.onCanvasPress}/>}></CircleScrollButton>
+        <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"square"} onPress={this.props.onCanvasPress}/>}></SquareScrollButton>
       </ScrollView>
     );
   }
 
 }
 
+//SCROLL BUTTONS
 class SquareScrollButton extends React.Component{
   constructor(props) {
     super(props);
@@ -125,7 +130,55 @@ class TriangleScrollButton extends React.Component{
 
 }
 
-class TriangleCanvasShape extends React.Component{
+class SettingsSideBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
+
+  toggleOpen = () => {
+    this.setState({ open: !this.state.open });
+    alert("pressed");
+  };
+
+  drawerContent = () => {
+    return (
+      <View>
+      <TouchableOpacity onPress={this.toggleOpen} style={styles.animatedBox}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+      <TextInput
+      style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+      onChangeText={text => onChangeText()}
+      value={'hello'}
+      />
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <View style={styles.container2}>
+        <MenuDrawer 
+          open={this.state.open} 
+          drawerContent={this.drawerContent()}
+          drawerPercentage={45}
+          animationTime={250}
+          overlay={true}
+          opacity={0.4}
+        >
+         <MasterView onCanvasPress={this.toggleOpen}/>
+       
+        </MenuDrawer>
+      </View>
+    );
+  }
+}
+
+// CANVAS SHAPE
+class CanvasShape extends React.Component{
   constructor(props) {
     super(props);
 
@@ -134,19 +187,53 @@ class TriangleCanvasShape extends React.Component{
     };
   }
 
+  getShape = () => {
+  if(this.props.renderShape == 'circle') {
+    return{
+      width: 100,
+      height: 100,
+      borderRadius: 100/2,
+      backgroundColor: 'blue',
+      margin: 3
+    };
+  }else if(this.props.renderShape == 'square') {
+    return{
+      width: 100,
+      height: 100,
+      backgroundColor: 'green',
+      padding: 12,
+      margin: 3 
+    };
+  }else if(this.props.renderShape == 'triangle') {
+    return{
+      width: 0,
+      height: 0,
+      backgroundColor: 'transparent',
+      borderStyle: 'solid',
+      borderLeftWidth: 50,
+      borderRightWidth: 50,
+      borderBottomWidth: 100,
+      borderLeftColor: 'transparent',
+      borderRightColor: 'transparent',
+      borderBottomColor: 'red',
+      margin: 3
+    };
+  }
+}
+
   render(){
     return(
-      <Draggable reverse={false}>
-        <Text style={styles.triangle}/>
+      <Draggable pressDrag={this.props.onPress} reverse={false} renderShape={'button'}>
+        <Text style={this.getShape()}/>
       </Draggable>  
     );
   }
-
 }
+
 
 const App = () => {
   return (
-    <MasterView/>
+    <SettingsSideBar/>
   );
 };
 
@@ -157,7 +244,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   Scrollelements: {
-    paddingHorizontal: 10
+    paddingHorizontal: 1
   },
   triangle: {
     width: 0,
@@ -189,6 +276,10 @@ const styles = StyleSheet.create({
   container: {
     height: 1000,
   },
+  container2: {
+    zIndex: 0,
+    flex: 1
+  },
   scrollView: {
     flex: 4,
     backgroundColor: 'lightgray',
@@ -197,8 +288,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue'
   },
   View: {
-    flex: 7
-  }
+    flex: 7,
+  },
+  animatedBox: {
+    flex: 1,
+    backgroundColor: "#38C8EC",
+  },
 })
 
 export default App;
