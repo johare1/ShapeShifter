@@ -175,10 +175,6 @@ class SettingsSideBar extends React.Component {
     );
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 8e8325123514a235a75cc733778667f063a901fb
 // CANVAS SHAPE
 class CanvasShape extends React.Component{
   constructor(props) {
