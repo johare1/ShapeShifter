@@ -144,14 +144,25 @@ class SettingsSideBar extends React.Component {
 
   drawerContent = () => {
     return (
-      <TouchableOpacity onPress={this.toggleOpen} style={styles.animatedBox}>
-        <Text>Close</Text>
-      </TouchableOpacity>
-      <TextInput
-      style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-      onChangeText={text => onChangeText()}
-      value={'hello'}
-      />
+      <View style={{backgroundColor:"red", flex:1}}>
+        <TouchableOpacity onPress={this.toggleOpen} style={{backgroundColor:"blue", maxWidth: 50}}>
+          <Text>Close</Text>
+        </TouchableOpacity>
+        <Text style={{marginTop: 100, marginLeft:10}}>Height:</Text>
+        <TextInput
+          style={styles.TextInputShape}
+          onChangeText={text => onChangeText()}
+        />
+        <Text style={{marginTop: 100, marginLeft:10}}>Width:</Text>
+        <TextInput
+          style={styles.TextInputShape}
+          onChangeText={text => onChangeText()}
+        />
+         <Text style={{marginTop: 100, marginLeft:10}}>Layer:</Text>
+        <TextInput
+          style={styles.TextInputShape}
+          onChangeText={text => onChangeText()}
+        />
       </View>
     );
   };
@@ -182,6 +193,10 @@ class CanvasShape extends React.Component{
     this.state = {
       pan: new Animated.ValueXY()
     };
+  }
+
+  componentDidMount() {
+    this.props.key = getID();
   }
 
   getShape = () => {
@@ -233,6 +248,14 @@ const App = () => {
     <SettingsSideBar/>
   );
 };
+
+var IDnum = 0;
+
+const getID = () => {
+  var ID = IDnum;
+  IDnum++;
+  return ID;
+}
 
 const styles = StyleSheet.create({
   button: {
@@ -291,6 +314,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#38C8EC",
   },
+  TextInputShape: { 
+    height: 40, 
+    borderColor: 'gray', 
+    borderWidth: 1, 
+    backgroundColor: "grey", 
+    maxWidth: 160, 
+    marginTop: 5, 
+    marginLeft:10, 
+    marginRight:10 
+  }
 })
 
 export default App;

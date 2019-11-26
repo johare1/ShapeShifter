@@ -7,7 +7,8 @@ import {
   Text,
   SafeAreaView,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from "react-native"
 import PropTypes from "prop-types"
 

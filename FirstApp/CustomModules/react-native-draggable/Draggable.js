@@ -87,7 +87,7 @@ export default class Draggable extends Component {
 				dy:this.state.pan.y
 			}], {listener: onMove}),
 			onPanResponderRelease: (e, gestureState) => {
-				if(this.state._value.y < -410){
+				if(this.state._value.y < -395){
 					this.putInBounds(this.state._value.x);
 				}
 				if(pressDragRelease)
@@ -173,7 +173,7 @@ export default class Draggable extends Component {
 	putInBounds = (xcoord) => {
 		Animated.spring(						
 			this.state.pan,				 
-			{toValue:{x:xcoord,y:-410}}		 
+			{toValue:{x:xcoord,y:-395}}		 
 		).start();
 	}
 
