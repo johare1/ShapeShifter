@@ -10,7 +10,8 @@ import {
   StatusBar,
   PanResponder,
   TextInput,
-  Animated
+  Animated,
+  Image
 } from 'react-native';
 import Draggable from './CustomModules/react-native-draggable/Draggable';
 import MenuDrawer from './CustomModules/react-native-side-drawer'
@@ -52,10 +53,14 @@ class MasterView extends React.Component{
     )
      return (
        <View style={styles.homeStyle}>
-         <Text style={{fontSize:20,textAlign:"center",marginBottom:25}}> ShapeShifter</Text>
-         <TouchableOpacity style={{backgroundColor:"red"}} onPress={() => this.changeView()}>
-             <Text style={{color:"black",textAlign:"center",fontWeight:"bold"}}>GO</Text>
+         <Text style={{fontSize:40,textAlign:"center",marginBottom:25}}> ShapeShifter</Text>
+         <TouchableOpacity style={styles.homeBtn} onPress={() => this.changeView()}>
+             <Text style={styles.homeBtnTxt}>Create a Shape</Text>
          </TouchableOpacity>
+         <Image
+          style={styles.logo}
+          source={require('./icon.png')}
+        />
        </View>
      );
    }
@@ -281,7 +286,7 @@ const styles = StyleSheet.create({
   },
   homeStyle:{
     margin:40,
-    marginTop:200
+    marginTop:200,
   },
   triangle: {
     width: 0,
@@ -330,6 +335,31 @@ const styles = StyleSheet.create({
   animatedBox: {
     flex: 1,
     backgroundColor: "#38C8EC",
+  },
+  homeBtn:{
+    backgroundColor:"blue",
+    width:120,
+    height:30,
+    alignSelf:"center",
+    borderRadius:10
+  },
+  homeBtnTxt:{
+    color:"white",
+    textAlign:"center",
+    fontWeight:"bold",
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+    margin:5
+  },
+  logo:{
+      width: 100,
+      height: 100,
+      resizeMode: 'stretch',
+      marginTop:70,
+      marginLeft:95,
+      justifyContent: 'center',
+      alignItems: 'center'
   },
   TextInputShape: { 
     height: 40, 
