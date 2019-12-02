@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Fragment} from 'react';
 import {
   SafeAreaView,
@@ -28,7 +20,7 @@ let canvasShapes = [];
 class MasterView extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {shapes: null}
+    this.state = {shapes: null,viewHome:true}
   }
 
   AppCallback = (Shape) => {
@@ -36,17 +28,37 @@ class MasterView extends React.Component{
     canvasShapes.push(Shape);
   }
 
-  render(){
-    return(
-      <SafeAreaView style={styles.container}>
-        <ScrollViewButtons onChange={this.AppCallback} onCanvasPress={this.props.onCanvasPress}></ScrollViewButtons>
-        <View style={styles.View}>
-          {canvasShapes}
-        </View>
-        
-      </SafeAreaView>
-    );
+  getInitialState(){
+    return{
+      viewHome:true
+    }
   }
+
+  changeView(){
+    this.setState({
+      viewHome: !this.state.viewHome
+    })
+    this.AppCallback;
+  }
+
+  render() {
+    if(!this.state.viewHome)return(
+          <SafeAreaView style={styles.container}>
+      <ScrollViewButtons onChange={this.AppCallback} onCanvasPress={this.props.onCanvasPress}/>
+      <View style={styles.View}>
+           {canvasShapes}
+      </View>
+    </SafeAreaView>
+    )
+     return (
+       <View style={styles.homeStyle}>
+         <Text style={{fontSize:20,textAlign:"center",marginBottom:25}}> ShapeShifter</Text>
+         <TouchableOpacity style={{backgroundColor:"red"}} onPress={() => this.changeView()}>
+             <Text style={{color:"black",textAlign:"center",fontWeight:"bold"}}>GO</Text>
+         </TouchableOpacity>
+       </View>
+     );
+   }
 
 }
 
@@ -68,6 +80,7 @@ class ScrollViewButtons extends React.Component{
         <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"circle"} onPress={this.props.onCanvasPress}/>}></CircleScrollButton>
         <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={<CanvasShape renderShape={"square"} onPress={this.props.onCanvasPress}/>}></SquareScrollButton>
       </ScrollView>
+      
     );
   }
 
@@ -265,6 +278,10 @@ const styles = StyleSheet.create({
   },
   Scrollelements: {
     paddingHorizontal: 1
+  },
+  homeStyle:{
+    margin:40,
+    marginTop:200
   },
   triangle: {
     width: 0,
