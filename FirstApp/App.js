@@ -44,7 +44,7 @@ class MasterView extends React.Component{
 
   render() {
     if(!this.state.viewHome)return(
-          <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollViewButtons onChange={this.AppCallback} onCanvasPress={this.props.onCanvasPress}/>
       <View style={styles.View}>
            {canvasShapes}
@@ -56,6 +56,9 @@ class MasterView extends React.Component{
          <Text style={{fontSize:40,textAlign:"center",marginBottom:25}}> ShapeShifter</Text>
          <TouchableOpacity style={styles.homeBtn} onPress={() => this.changeView()}>
              <Text style={styles.homeBtnTxt}>Create a Shape</Text>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.homeBtn} onPress={() => this.changeView()}>
+             <Text style={styles.homeBtnTxt}>View My Shapes</Text>
          </TouchableOpacity>
          <Image
           style={styles.logo}
@@ -338,10 +341,11 @@ const styles = StyleSheet.create({
   },
   homeBtn:{
     backgroundColor:"blue",
-    width:120,
+    width:130,
     height:30,
     alignSelf:"center",
-    borderRadius:10
+    borderRadius:10,
+    marginTop:10
   },
   homeBtnTxt:{
     color:"white",
