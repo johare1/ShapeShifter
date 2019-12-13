@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Fragment} from 'react';
 import {
   SafeAreaView,
@@ -18,7 +10,8 @@ import {
   StatusBar,
   PanResponder,
   TextInput,
-  Animated
+  Animated,
+  Image
 } from 'react-native';
 import Draggable from './CustomModules/react-native-draggable/Draggable';
 import MenuDrawer from './CustomModules/react-native-side-drawer'
@@ -28,7 +21,7 @@ let canvasShapes = [];
 class MasterView extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {shapes: null}
+    this.state = {shapes: null,viewHome:true}
   }
 
   AppCallback = (Shape) => {
@@ -52,20 +45,47 @@ class MasterView extends React.Component{
     }
     canvasShapes.push(canvShape);
   }
+    
+  getInitialState(){
+    return{
+      viewHome:true
+    }
+  }
 
-  render(){
-    return(
-      <SafeAreaView style={styles.container}>
-        <ScrollViewButtons onChange={this.AppCallback}></ScrollViewButtons>
-        <View style={styles.View}>
+  changeView(){
+    this.setState({
+      viewHome: !this.state.viewHome
+    })
+    this.AppCallback;
+  }
+
+  render() {
+    if(!this.state.viewHome)return(
+    <SafeAreaView style={styles.container}>
+      <ScrollViewButtons onChange={this.AppCallback} onCanvasPress={this.props.onCanvasPress}/>
+      <View style={styles.View}>
           {canvasShapes.map(shape => (
             <CanvasShape zind={shape.zind} usekey={shape.key} key={shape.key} currwidth={shape.width} currheight={shape.height} renderShape={shape.type} onPress={this.props.onCanvasPress}/>
           ))}
-        </View>
-        
-      </SafeAreaView>
-    );
-  }
+      </View>
+    </SafeAreaView>
+    )
+     return (
+       <View style={styles.homeStyle}>
+         <Text style={{fontSize:40,textAlign:"center",marginBottom:25}}> ShapeShifter</Text>
+         <TouchableOpacity style={styles.homeBtn} onPress={() => this.changeView()}>
+             <Text style={styles.homeBtnTxt}>Create a Shape</Text>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.homeBtn} onPress={() => this.changeView()}>
+             <Text style={styles.homeBtnTxt}>View My Shapes</Text>
+         </TouchableOpacity>
+         <Image
+          style={styles.logo}
+          source={require('./icon.png')}
+        />
+       </View>
+     );
+   }
 
 }
 
@@ -87,6 +107,7 @@ class ScrollViewButtons extends React.Component{
         <CircleScrollButton onPress={this.ScrollButtonCallback} renderOnPress={"circle"}></CircleScrollButton>
         <SquareScrollButton onPress={this.ScrollButtonCallback} renderOnPress={"square"}></SquareScrollButton>
       </ScrollView>
+      
     );
   }
 
@@ -302,6 +323,10 @@ const styles = StyleSheet.create({
   Scrollelements: {
     paddingHorizontal: 1
   },
+  homeStyle:{
+    margin:40,
+    marginTop:200,
+  },
   triangle: {
     width: 0,
     height: 0,
@@ -349,6 +374,32 @@ const styles = StyleSheet.create({
   animatedBox: {
     flex: 1,
     backgroundColor: "#38C8EC",
+  },
+  homeBtn:{
+    backgroundColor:"blue",
+    width:130,
+    height:30,
+    alignSelf:"center",
+    borderRadius:10,
+    marginTop:10
+  },
+  homeBtnTxt:{
+    color:"white",
+    textAlign:"center",
+    fontWeight:"bold",
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+    margin:5
+  },
+  logo:{
+      width: 100,
+      height: 100,
+      resizeMode: 'stretch',
+      marginTop:70,
+      marginLeft:95,
+      justifyContent: 'center',
+      alignItems: 'center'
   },
   TextInputShape: { 
     height: 40, 
